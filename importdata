@@ -1,27 +1,3 @@
-基础知识点：
-1，os.listdir(path)获取path下所有文件名。
-2,函数exec(object[, globals[, locals]]),object必须是字符串或code对象, 执行object中语句。
-  eval(expression[, globals[, locals]]),执行字符串表达式，并返回表达式的值,expression中涉及的变量优先中locals中，再从globals中获取，再从
- 当前模块中取。
-eg:
-name_list = ['aa', 'bb', 'cc']    #定义变量名
-for i in range(len(name_list)):
-	cmd = "%s=i" %name_list[i]    #定义该变量要赋的值（此处为i）
-	exec(cmd)
-print(exec(name_list[0]))
-print(eval(name_list[0]))  
-
-output:
-None
-0
-
-3，zip()函数，同步循环括号内变量。
-4,globals().update()/locals().update()将字典中的key和value转换为相应的变量名和变量值。
-  --globals()以字典类型返回当前位置的全部全局变量及变量值；
-  --locals()以字典类型返回当前位置的全部局部变量及变量值；
-  --dict.update(dict2)把字典dict2的键/值对更新到dict里。
-  
-
 #方法1：使用exec
 import os
 import pandas as pd
@@ -72,3 +48,26 @@ for doc in doclist:
         
 globals().update(docdict)
 
+基础知识点：
+1，os.listdir(path)获取path下所有文件名。
+2,函数exec(object[, globals[, locals]]),object必须是字符串或code对象, 执行object中语句。
+  eval(expression[, globals[, locals]]),执行字符串表达式，并返回表达式的值,expression中涉及的变量优先中locals中，再从globals中获取，再从
+ 当前模块中取。
+eg:
+name_list = ['aa', 'bb', 'cc']    #定义变量名
+for i in range(len(name_list)):
+	cmd = "%s=i" %name_list[i]    #定义该变量要赋的值（此处为i）
+	exec(cmd)
+print(exec(name_list[0]))
+print(eval(name_list[0]))  
+
+output:
+None
+0
+
+3，zip()函数，同步循环括号内变量。
+4,globals().update()/locals().update()将字典中的key和value转换为相应的变量名和变量值。
+  --globals()以字典类型返回当前位置的全部全局变量及变量值；
+  --locals()以字典类型返回当前位置的全部局部变量及变量值；
+  --dict.update(dict2)把字典dict2的键/值对更新到dict里。
+  
