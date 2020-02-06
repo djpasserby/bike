@@ -1,1 +1,74 @@
-hh
+基础知识点：
+1，os.listdir(path)获取path下所有文件名。
+2,函数exec(object[, globals[, locals]]),object必须是字符串或code对象, 执行object中语句。
+  eval(expression[, globals[, locals]]),执行字符串表达式，并返回表达式的值,expression中涉及的变量优先中locals中，再从globals中获取，再从
+ 当前模块中取。
+eg:
+name_list = ['aa', 'bb', 'cc']    #定义变量名
+for i in range(len(name_list)):
+	cmd = "%s=i" %name_list[i]    #定义该变量要赋的值（此处为i）
+	exec(cmd)
+print(exec(name_list[0]))
+print(eval(name_list[0]))  
+
+output:
+None
+0
+
+3，zip()函数，同步循环括号内变量。
+4,globals().update()/locals().update()将字典中的key和value转换为相应的变量名和变量值。
+  --globals()以字典类型返回当前位置的全部全局变量及变量值；
+  --locals()以字典类型返回当前位置的全部局部变量及变量值；
+  --dict.update(dict2)把字典dict2的键/值对更新到dict里。
+  
+
+#方法1：使用exec
+import os
+import pandas as pd
+#输出需要导入文件的数据框名字
+docname=['df_ferrara1','df_milano1','df_mantova1','df_ravenna'
+         ,'df_torino','df_asti','df_bologna','df_piacenza'
+        ,'df_cesena','df_faenza']
+datapath='WeatherData'
+doclist=os.listdir(datapath)
+#读入文件
+for doc in doclist:
+    if doc.split('.')[-1].lower()=='csv':
+        cmd="%s=pd.read_csv(datapath+'/'+doc)" %docname[doclist.index(doc)]
+        exec(cmd)  
+ 
+#方法2：
+import os
+import pandas as pd
+#输出需要导入文件的数据框名字
+docname=['df_ferrara1','df_milano1','df_mantova1','df_ravenna'
+         ,'df_torino','df_asti','df_bologna','df_piacenza'
+        ,'df_cesena','df_faenza']
+datapath='WeatherData'
+doclist=os.listdir(datapath)
+#读入文件
+for i,doc in zip(range(len(docname)),doclist):
+    if doc.split('.')[-1].lower()=='csv':
+        cmd="%s=pd.read_csv(datapath+'/'+doc)" %docname[i]
+        exec(cmd)
+
+
+#方法3：使用字典储存导入的数据框，用globals().update(dict)将字典中的key和value转换为相应的表名和数据
+import os
+import pandas as pd 
+
+#输出需要导入文件的数据框名字
+docname=['df_ferrara1','df_milano1','df_mantova1','df_ravenna'
+         ,'df_torino','df_asti','df_bologna','df_piacenza'
+        ,'df_cesena','df_faenza']
+datapath='WeatherData'
+doclist=os.listdir(datapath)
+docdict={}
+
+#读入文件
+for doc in doclist:
+    if doc.split('.')[-1].lower()=='csv':
+        docdict[docname[doclist.index(doc)]]=pd.read_csv(datapath+'/'+doc)
+        
+globals().update(docdict)
+
